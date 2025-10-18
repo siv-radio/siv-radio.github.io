@@ -1,0 +1,112 @@
+baseURL: https://siv-radio.github.io/
+languageCode: en-us
+title: SIV-Radio blog
+copyright: "&copy; 2025 Igor Sivchek"
+theme: ["PaperMod"]
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: false
+pygmentsUseClasses: true
+mainsections: ["posts", "papermod"]
+
+minify:
+  disableXML: true
+  # minifyOutput: true
+
+pagination:
+  disableAliases: false
+  pagerSize: 10
+
+menu:
+  main:
+    - name: Home
+      url:
+      weight: 10
+    - name: Archive
+      url: /archive/
+      weight: 20
+    - name: Tags
+      url: /tags/
+      weight: 30
+    - name: Search
+      url: /search/
+      weight: 40
+    - name: License
+      url: /lic/  # "lic" instead of "license" is to avoid an error.
+      weight: 50
+    - name: About
+      url: /about/
+      weight: 60
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON  # Necessary for search.
+
+params:
+  env: production  # To enable Google Analytics, OpenGraph, Twitter Cards, and Schema [https://schema.org/].
+  # title: SIV-Radio blog
+  description: "Personal blog"
+  author: Igor Sivchek
+  # author: ["Me", "You"] # multiple authors
+
+  defaultTheme: auto  # dark, light, auto.
+  disableThemeToggle: false
+  # disableLangToggle: true
+  ShowShareButtons: true
+  ShowReadingTime: true
+  # disableSpecial1stPost: true
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  # ShowFullTextinRSS: false  # Disable displaying of the page full text in RSS feed if the page does not have a description and a summary.
+  ShowAllPagesInArchive: true
+  ShowPageNums: true
+  ShowToc: true
+  # comments: false
+  # images: ["images/papermod-cover.png"]
+  DateFormat: "2006-01-02"  # Use the exact instances from [https://pkg.go.dev/time#pkg-constants] or localization from [https://gohugo.io/functions/time/format/].
+
+  homeInfoParams:
+    Title: "Posts"
+    # Content: "<span style='color: transparent; background-color: transparent;'>This text is hidden by CSS.</span>"  # To show only social icons without a title and content.
+    # Content: "Related links:"
+
+  socialIcons:
+    - name: RSS
+      title: Subscription to the RSS feed
+      url: "/index.xml"
+    - name: GitHub
+      title: My Github account
+      url: "https://github.com/siv-radio"
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+    # https://gohugo.io/functions/transform/tomath/
+    # https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+          - - "$$"
+            - "$$"
+          inline:
+          - - "$`"
+            - "`$"
+        enable: true
+  highlight:
+    noClasses: false
+    # anchorLineNos: true
+    # codeFences: true
+    # guessSyntax: true
+    # lineNos: true
+    # style: monokai
