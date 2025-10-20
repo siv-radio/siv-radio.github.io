@@ -17,7 +17,7 @@ Except where otherwise noted, all original material, excluding software, on this
 {{< /collapse >}}
 
 {{< collapse summary="**CC BY 4.0 license summary**" >}}
-**This summary is not a substitution of the full legal text.**
+**This summary is not a substitution for the full legal text.**
 
 **You are free to:**
 - **Share** &ndash; copy and redistribute the material in any medium or format for any purpose, even commercially.
