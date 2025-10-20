@@ -1,5 +1,5 @@
 ---
-author: "Igor Sivchek"
+author: "Author One"
 title: "Test Post"
 date: "2025-09-25"
 description: "test description"

@@ -6,11 +6,9 @@ searchHidden: true
 ShowCodeCopyButtons: false
 ---
 
-[The directory is named "lic" instead of "license" in order to avoid confusion with "site-dir/themes/PaperMod/LICENSE" file when building the site caused by "site-dir/layouts/shortcodes/include.html".]: #
-
 ## Website content, except software
 
-Except where otherwise noted, the artistic or literary work, database, and other meterial, excluding software, provided by Igor Sivchek on this website (SIV-Radio) is made available under the [Creative Commons Attribution 4.0 International (CC BY 4.0) license](https://creativecommons.org/licenses/by/4.0/).
+Except where otherwise noted, all original material, excluding software, on this website is made available under the [Creative Commons Attribution 4.0 International (CC BY 4.0) license](https://creativecommons.org/licenses/by/4.0/).
 
 {{< collapse summary="**Creative Commons Attribution 4.0 International license**" >}}
 ```text
@@ -37,7 +35,7 @@ Except where otherwise noted, the artistic or literary work, database, and other
 
 ## Software
 
-Except where otherwise noted, the example programs and other software provided by Igor Sivchek on this website (SIV-Radio) are made available under the OSI-approved [MIT license](https://opensource.org/license/mit).
+Except where otherwise noted, the original software on this website is made available under the [MIT license](https://opensource.org/license/mit).
 
 {{< collapse summary="**MIT License**" >}}
 ```text
