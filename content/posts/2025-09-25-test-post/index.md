@@ -7,7 +7,7 @@ summary: "test summary"
 tags: ["tag 0", "tag 1", "tag 2", "tag 3"]
 math: true
 ShowBreadCrumbs: false
-draft: false
+draft: true
 ---
 
 [hidden words]: #
