@@ -87,6 +87,10 @@ params:
       title: My Github account
       url: "https://github.com/siv-radio"
 
+  analytics:
+    google:
+      SiteVerificationTag: "hYt43C_41DlEnkwt_Ll24XwHVcuKC38YAl9PAIbFSo8"
+
 markup:
   goldmark:
     renderer:
