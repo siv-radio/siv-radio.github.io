@@ -1,0 +1,10 @@
+{{ $text := (.Get "text" | markdownify) }}
+{{ $par := (.Get "par") }}
+
+<div style="text-align: center;">
+    {{- if $par }}
+    <p>{{ $text }}</p>
+    {{- else }}
+    {{ $text }}
+    {{- end}}
+</div>

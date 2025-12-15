@@ -108,3 +108,22 @@ The following lines has been modified
 - id: next_page
   translation: "Prev"
 ```
+
+## Center text
+`./layouts/shortcodes/center.html`  
+Type: file added.  
+Reason: a simple way to center names of pictures and tables.  
+Date: 2025.11.14
+
+How to use
+
+```markdown
+{{< center text="Picture 1. **Some name**." par=true >}}
+```
+
+`par` argument tells whether to add a paragraph break after the `text` or not.
+
+References  
+1. https://gohugo.io/content-management/shortcodes/
+2. https://gohugo.io/shortcodes/qr/
+3. https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/_shortcodes/qr.html

@@ -53,7 +53,7 @@ Building of a system:
 3. Choose a data transformation algorithm that will be used to preprocess each dataset item. Data augmentation techniques can be used. The final choice can be made after experimenting.
 4. Choose an artificial neural network model that can produce embedding vectors out of dataset items. There can be several candidate models for this role, and the final choice can be made after experimenting.
 5. Choose a way of creating a single embedding vector out of an item set related to this class. The vector represents the whole class.  
-Note. In the general case, there can be multiple ways of embedding vector creation and several embedding vectors representing one class. It is not the case in this article.
+Note. In the general case, there can be multiple ways of embedding vector creation and several embedding vectors representing one class. It is not the case in this blog post.
 6. Choose database organization to store and search embedding vectors. The main feature of the database here is its algorithm for finding similarity between a query vector and stored vectors. Several alternatives may be considered.  
 Note. In the general case, there can be several embedding vectors for a query object.
 7. Construct an embedding vector creation algorithm. It must be able to fill up a database with the vectors created out of a training dataset.
@@ -84,7 +84,7 @@ In this work, some models produce significantly higher accuracy if a new task-sp
 
 Experiments showed that distilled [TinyViT](https://arxiv.org/abs/2207.10666 "\"TinyViT: Fast Pretraining Distillation for Small Vision Transformers\", by Wu et al., 2022.07.21") models [[link](https://huggingface.co/timm/tiny_vit_5m_224.dist_in22k_ft_in1k)], [[link](https://huggingface.co/timm/tiny_vit_11m_224.dist_in22k_ft_in1k)], [[link](https://huggingface.co/timm/tiny_vit_21m_224.dist_in22k_ft_in1k)] are far ahead (> 4 % of accuracy) of other considered models in this particular task. These models have been chosen as the main models for this work (see table 1).
 
-Table 1. Distilled TinyViT models for embedding creation.
+{{< center text="Table 1. Distilled TinyViT models for embedding creation." par=false >}}
 
 | Model name | Params<br>(M) | GMACs | Activations<br>(M) | Image size | Embedding<br>size |
 | :--------: | :-----------: | :---: | :----------------: | :--------: | :---------------: |
@@ -96,17 +96,19 @@ Notes: 1) the models are pre-trained on ImageNet-22k and fine-tuned on ImageNet-
 
 Creation of a vector that represents each class in a database is a task similar to [pooling](https://arxiv.org/abs/2009.07485 "\"Pooling Methods in Deep Neural Networks, a Review\", by H. Gholamalinezhad, H. Khosravi, 2020"). Different techniques can be applied to a set of vectors of the same size to create one output vector. One of the most obvious is averaging. Suppose there is a set of embedding vectors of one class
 
-$`V_{i}=\begin{pmatrix} v_{i,0} & \cdots & v_{i,n-1} \end{pmatrix}`$,
-$`S=\begin{pmatrix} V_{0} \\ \cdots \\ V_{m-1} \end{pmatrix}`$,
-$`S=\begin{pmatrix}
+$$\begin{align}
+V_{i}=\begin{pmatrix} v_{i,0} & \cdots & v_{i,n-1} \end{pmatrix},
+S=\begin{pmatrix} V_{0} \\ \cdots \\ V_{m-1} \end{pmatrix},
+S=\begin{pmatrix}
 v_{0,0} & \cdots & v_{0,n-1} \\
 \cdots & \cdots & \cdots \\
 v_{m-1,0} & \cdots & v_{m-1,n-1}
-\end{pmatrix}`$,
+\end{pmatrix}, \nonumber
+\end{align}$$
 
 where *m* - the number of embedding vectors, *n* - the size of an embedding vector, *V<sub>i</sub>* - the *i*-th embedding vector, *v<sub>i,j</sub>* - the *j*-th element of the *i*-th embedding vector, *S* - a matrix of size (*m* x *n*) that contains embedding vectors. Then the average embedding vector is defined as
 
-$`V_{avg}=\frac{1}{m}\begin{pmatrix} \displaystyle\sum_{i=0}^{m-1}v_{i,0} & \cdots & \displaystyle\sum_{i=0}^{m-1}v_{i,n-1} \end{pmatrix}`$.
+$$V_{avg}=\frac{1}{m}\begin{pmatrix} \displaystyle\sum_{i=0}^{m-1}v_{i,0} & \cdots & \displaystyle\sum_{i=0}^{m-1}v_{i,n-1} \end{pmatrix}.$$
 
 This technique was applied as the first alternative in this work and yielded satisfying results. Other techniques were not tested.
 
@@ -123,13 +125,19 @@ Suppose 80 % of 5400 images are used for a database creation, 10 % for validatio
 
 Each iteration of dataset partitioning requires execution of training and validation procedures, which consume respective computational resources and time. In order to reduce the number of iterations, distribution law knowledge or hypothesis may be used. Several values of a validation metric can be enough to calculate distribution parameters with required confidence. For example, suppose that accuracy calculated for different validation subsets can be approximately described by [Student's *t*-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution). Of course, unlike *t*-distribution, which has infinite tails, accuracy values are distributed between 0 and 1 inclusively. Probably, the most precise way is to find the true distribution law and get its parameters from experimental data; a slightly worse way is to use something like a [metalog distribution](https://en.wikipedia.org/wiki/Metalog_distribution) that can approximate a wide variety of statistics. However, *t*-distribution is used here for its simplicity as an approximation near the mean value. A set of expressions to calculate the mean accuracy value is given below
 
-$`\mu_{samp}=\frac{1}{n}\displaystyle\sum_{i=0}^{n-1}x_{i}`$,
-$`\sigma_{samp}=\sqrt{\frac{1}{n-1}\displaystyle\sum_{i=0}^{n-1}(x_{i}-\mu_{samp})^2}`$,
+$$\begin{align}
+\mu_{samp}=\frac{1}{n}\displaystyle\sum_{i=0}^{n-1}x_{i},
+\sigma_{samp}=\sqrt{\frac{1}{n-1}\displaystyle\sum_{i=0}^{n-1}(x_{i}-\mu_{samp})^2}, \nonumber
+\end{align}$$
 
-$`p(\mu_{samp}-\delta_{req}<\mu_{true}<\mu_{samp}+\delta_{req})=p_{req}`$,
-$`\delta_{req}=t(p_{req},n-1)\frac{\sigma_{samp}}{\sqrt{n}}`$,
+$$\begin{align}
+p(\mu_{samp}-\delta_{req}<\mu_{true}<\mu_{samp}+\delta_{req})=p_{req},
+\delta_{req}=t(p_{req},n-1)\frac{\sigma_{samp}}{\sqrt{n}}, \nonumber
+\end{align}$$
 
-$`\mu_{true}=\mu_{samp}\pm\delta_{req}`$ with $`p_{req}`$ confidence,
+$$\begin{align}
+\mu_{true}=\mu_{samp}\pm\delta_{req} \text{ with } p_{req} \text{ confidence}, \nonumber
+\end{align}$$
 
 where *x<sub>i</sub>* - the *i*-th experimental value of an observed variable, *n* - the size of a sample, *&mu;<sub>samp</sub>* and *&mu;<sub>true</sub>* - sample and true mean values, *&sigma;<sub>samp</sub>* and *&sigma;<sub>true</sub>* - [unbiased sample](https://math.oxford.emory.edu/site/math117/besselCorrection/) and true standard deviations, *&delta;<sub>req</sub>* - the margin of error, *p<sub>req</sub>* - required confidence level, *t*(*preq*, *n* – 1) - two-sided critical value for a given confidence level *p<sub>req</sub>* and degrees of freedom (*n* – 1).
 
@@ -137,13 +145,12 @@ Theoretically, it may be possible to improve the accuracy of this system by fine
 
 Table 2 represents simulation results of 3 distilled TinyViT models. In practice, it is much easier to notice the difference in accuracy between 5M and 11M models than between 11M and 21M models. It is interesting to find how an error rate decreases when a larger model is used.
 
-5M to 11M: $`(0.966-0.951)/(1-0.951)\approx0.306`$.
-
-11M to 21M: $`(0.973-0.966)/(1-0.966)\approx0.206`$.
+$$\text{5M to 11M: } (0.966-0.951)/(1-0.951)\approx0.306.$$
+$$\text{11M to 21M: } (0.973-0.966)/(1-0.966)\approx0.206.$$
 
 Maybe it is not obvious, but despite the little accuracy differences, the larger models here, actually, provide significant improvement in prediction quality by reducing the error rate.
 
-Table 2. Simulation results for distilled TinyViT models.
+{{< center text="Table 2. Simulation results for distilled TinyViT models." par=false >}}
 
 | Model name | Encoder<br>params (M) | Accuracy | Top-4<br>accuracy |
 | :--------: | :-------------------: | :------: | :---------------: |
@@ -159,13 +166,15 @@ In probability theory, there is a [cumulative distribution function](https://en.
 
 A cumulative accuracy function in picture 1 shows that some classes are significantly less predictable than others. For example, 0.35 share of classes have accuracy not greater than 0.9167. Here are the classes with accuracy &le; 0.8: duck (0.500), rat (0.583), possum (0.583), whale (0.667), mouse (0.750), and ox (0.750). This information can be used for further data analysis and system improvement.
 
-![cumacc](cumacc-tiny_vit_5m_224-banerjee-4x4-mod.png)  
-Picture 1. Cumulative accuracy function of a system based on the TinyViT 5M model.
+![cumacc](cumacc-tiny_vit_5m_224-banerjee-4x4-mod.png#center)
+
+{{< center text="Picture 1. Cumulative accuracy function of a system based on the TinyViT 5M model." par=true >}}
 
 Picture 2 shows some examples of images with their true and predicted labels. Most of such examples show only correct predictions, but this instance was selected because it contains an incorrect one. Probable reasons for the incorrect prediction are the mice and rats resemblance (not each human neural network can distinguish a mouse from a rat) and the low quality of the picture. Although the system somehow managed to identify a flamingo from that cropped and gridded picture of a (paper?) flamingo model.
 
-![examples](examples-tiny_vit_5m_224-banerjee-2-4x4.png)  
-Picture 2. Some predictions of a system based on the TinyViT 5M model.
+![examples](examples-tiny_vit_5m_224-banerjee-2-4x4.png#center)
+
+{{< center text="Picture 2. Some predictions of a system based on the TinyViT 5M model." par=true >}}
 
 ## Project files
 The project files are listed below in alphabetical order with short descriptions.
@@ -264,7 +273,7 @@ There is a function to visualize predictions. It shows images, target labels, an
 Another function draws a cumulative accuracy function plot.
 
 ## Conclusion
-This article describes a viable approach to solving a classification task using a pre-trained artificial neural network model without fine-tuning. It is based on the use of an embedding vector database and cosine similarity search. The presented image classification system has up to 0.973 validation accuracy on the Banerjee's Animal Image Dataset, which has 90 classes. The core of the system is one of the distilled TinyViT models with 5.07 - 20.5 million parameters.
+This blog post describes a viable approach to solving a classification task using a pre-trained artificial neural network model without fine-tuning. It is based on the use of an embedding vector database and cosine similarity search. The presented image classification system has up to 0.973 validation accuracy on the Banerjee's Animal Image Dataset, which has 90 classes. The core of the system is one of the distilled TinyViT models with 5.07 - 20.5 million parameters.
 
 Due to the relatively small size of the dataset (5400 images), a special technique was used to increase the precision of the final accuracy calculation. Different training and validation subsets were partitioned in order to calculate the sample mean validation accuracy.
 
