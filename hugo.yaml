@@ -74,6 +74,18 @@ params:
   # images: ["images/papermod-cover.png"]
   DateFormat: "2006-01-02"  # Use the exact instances from [https://pkg.go.dev/time#pkg-constants] or localization from [https://gohugo.io/functions/time/format/].
 
+  assets:
+    # "How do I set the favicon for my webpage", by keitng, 2022.06.20,
+    # https://github.com/adityatelange/hugo-PaperMod/discussions/953
+    favicon: "/icons/favicon.ico"
+    favicon16x16: "/icons/favicon-16x16.png"
+    favicon32x32: "/icons/favicon-32x32.png"
+    apple_touch_icon: "/icons/apple-touch-icon.png"
+    # safari_pinned_tab: "/icons/safari-pinned-tab.svg"
+
+  # label:
+  #   icon: favicon.ico
+
   homeInfoParams:
     Title: "Posts"
     # Content: "<span style='color: transparent; background-color: transparent;'>This text is hidden by CSS.</span>"  # To show only social icons without a title and content.
