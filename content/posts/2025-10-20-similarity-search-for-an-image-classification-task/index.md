@@ -268,7 +268,7 @@ A context manager wrapper around a "[`cProfile.Profile`](https://docs.python.org
 ```
 {{< /collapse >}}
 
-There is a function to visualize predictions. It shows images, target labels, and predicted labels. It is worth it to visually control the results of model work when it is possible.
+There is a function to visualize predictions. It shows images, target labels, and predicted labels. It is worth to visually control the results of model work when it is possible.
 
 Another function draws a cumulative accuracy function plot.
 

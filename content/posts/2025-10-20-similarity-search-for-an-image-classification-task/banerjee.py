@@ -6,6 +6,15 @@
 Tools to work with Sourav Banerjee's Animal Image Dataset (90 Different
 Animals) v5.
 
+Changes in the directory structure of the dataset.
+-------------------------------------------------------
+original         ->        this work
+-------------------------------------------------------
+animals/                   banerjee-animal-90/
+    animals/                   animals/
+name of the animals.txt        names-of-the-animals.txt
+-------------------------------------------------------
+
 Requires Python >= 3.12.
 
 References:
